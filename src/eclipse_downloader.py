@@ -11,7 +11,7 @@ def generate_file_name(id):
 
 def get_missing_file_ids():
     array_of_missing = []
-    for id in range(1, 569009):
+    for id in range(1, 189669):
         file_name = generate_file_name(id)
         if not os.path.isfile(file_name):
             array_of_missing.append(id)
@@ -26,16 +26,24 @@ def download_stacks():
 
     for id in ids:
         file_name = generate_file_name(id)
+        print(f"Downloading report {id} to {file_name}...", end=" ")
 
         expected_time = datetime.now() + timedelta(seconds=1)
         response = requests.get(f"https://bugs.eclipse.org/bugs/show_bug.cgi?ctype=xml&id={id}")
 
         if not response.ok:
             need_retry = True
+            print("Failed.")
             continue
 
         with open(file_name, "w+") as file:
-            file.write(response.content.decode("utf-8"))
+            try:
+                file.write(response.content.decode("utf-8"))
+            except:
+                print("Failed.")
+                raise
+
+        print("Done.")
 
         current_time = datetime.now()
         if expected_time > current_time:
