@@ -36,7 +36,7 @@ def download_stacks():
             print("Failed.")
             continue
 
-        with open(file_name, "w+") as file:
+        with open(file_name, "w+", encoding="utf-8") as file:
             try:
                 file.write(response.content.decode("utf-8"))
             except:
