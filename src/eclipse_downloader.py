@@ -41,6 +41,8 @@ def download_stacks():
                 file.write(response.content.decode("utf-8"))
             except:
                 print("Failed.")
+                file.close()
+                os.remove(file.name)
                 raise
 
         print("Done.")
