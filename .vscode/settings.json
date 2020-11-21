@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "**/downloads": true,
+    "**/exceptions": true
+  }
+}
