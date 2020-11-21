@@ -1,4 +1,5 @@
 import re
+import glob
 
 def check_for_java(text):
   return bool(re.search(r"((.|\n)*)[(].*\.java.*[)]((.|\n)*)", text))
@@ -20,3 +21,10 @@ class ExceptionMatch(object):
 def retrieve_exceptions(text):
   searches = re.findall(r"((?:\b\w*\.*)*?\w*(?:Exception|Error))(?:(?:\n)|(?:(?::)(.*\n)))", text, re.MULTILINE)
   return [ExceptionMatch(match[0], match[1]) for match in searches]
+
+files = glob.glob("./with_exceptions/*.xml")
+for path in files:
+  with open(path, "r+", encoding="utf-8") as file:
+    lines = "\n".join(file.readlines())
+    for exception in retrieve_exceptions(lines):
+      print(exception)
