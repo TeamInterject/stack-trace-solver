@@ -24,7 +24,7 @@ def retrieve_exceptions(text):
 
 files = glob.glob("./with_exceptions/*.xml")
 for path in files:
-  with open(path, "r+", encoding="utf-8") as file:
+  with open(path, "r+", encoding="utf-8", errors='ignore') as file:
     lines = "\n".join(file.readlines())
     for exception in retrieve_exceptions(lines):
       print(exception)
