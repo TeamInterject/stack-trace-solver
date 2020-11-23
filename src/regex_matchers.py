@@ -1,6 +1,4 @@
 import re
-import glob
-
 
 def check_for_java(text):
     return bool(re.search(r"((.|\n)*)[(].*\.java.*[)]((.|\n)*)", text))

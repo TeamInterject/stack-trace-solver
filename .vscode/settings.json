@@ -1,6 +1,7 @@
 {
   "files.exclude": {
-    "**/downloads": true,
-    "**/exceptions": true
-  }
+    "**/ignored_data": true
+  },
+  "editor.insertSpaces": true,
+  "editor.tabSize": 4
 }

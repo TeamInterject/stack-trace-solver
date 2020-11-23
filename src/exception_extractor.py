@@ -8,7 +8,7 @@ import os
 def extract_exceptions(files):
     for path in files:
         fileName = Path(path).stem
-        outputFile = "exceptions/{fileName}.txt"
+        outputFile = f"ignored_data/exceptions/{fileName}.txt"
         if os.path.isfile(outputFile):
             continue
 
@@ -17,14 +17,14 @@ def extract_exceptions(files):
             excs = retrieve_exceptions(lines)
             if len(excs) == 0:
                 continue
-            
+
             print(path)
-            with open(f"exceptions/{fileName}.txt", "a", encoding="utf-8", errors="ignore") as output:
+            with open(f"ignored_data/exceptions/{fileName}.txt", "a", encoding="utf-8", errors="ignore") as output:
                 for exception in excs:
                     output.write(exception.__str__() + "\n")
 
 def orchestrate_extraction(threads=8):
-    files = glob.glob("./downloads/*.xml")
+    files = glob.glob("ignored_data/downloads/*.xml")
     files.sort()
     chunked_files = chunks(files, threads)
 
@@ -37,16 +37,38 @@ def orchestrate_extraction(threads=8):
     for t in threads:
         t.join()
     
-    files = glob.glob("exceptions/*.txt")
+    files = glob.glob("ignored_data/exceptions/*.txt")
     for path in files:
-        with open(f"exceptions.txt", "a", encoding="utf-8", errors="ignore") as output:
+        with open(f"ignored_data/exceptions.txt", "a", encoding="utf-8", errors="ignore") as output:
             with open(path, "r+", encoding="utf-8", errors='ignore') as file:
                 lines = "\n".join(file.readlines())
                 output.write(lines)
 
-def load_exceptions():
-    with open("exeptions.txt", "r+", encoding="utf-8", errors='ignore') as file:
+def load_exceptions(fileName="exceptions.txt"):
+    with open(f"ignored_data/{fileName}", "r+", encoding="utf-8", errors='ignore') as file:
         lines = "\n".join(file.readlines())
         return retrieve_exceptions(lines)
 
-orchestrate_extraction()
+def retrieve_exception_dictionary(fileName="exceptions.txt"):
+    exceptions = load_exceptions(fileName)
+    ex_dict = {}
+    for exception in exceptions:
+        if exception.exception not in ex_dict:
+            ex_dict[exception.exception] = []
+        
+        ex_dict[exception.exception].append(exception)
+
+    return ex_dict
+
+def debug_print():
+    ex_dict = retrieve_exception_dictionary()
+    ex_dict_keys = list(ex_dict.keys())
+    ex_dict_keys.sort()
+    for key in ex_dict_keys:
+        values = ex_dict[key]
+        if len(values) < 2:
+            continue
+
+        print(key)
+        for value in values:
+            print(f"\t{value}")
