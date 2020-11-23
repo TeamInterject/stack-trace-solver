@@ -1,3 +1,4 @@
+import numpy as np
+
 def chunks(l, n):
-    n = max(1, n)
-    return (l[i:i+n] for i in range(0, len(l), n))
+    return [list(array) for array in np.array_split(l, n)]

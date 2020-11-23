@@ -6,7 +6,7 @@ import os.path
 import random
 import _thread
 from tqdm import tqdm
-import numpy as np
+from utils import chunks
 
 def generate_file_name(id):
     return f"ignored_data/downloads/incident_{id:06d}.xml"
@@ -63,9 +63,6 @@ def download_with_retry(chunk):
             continue
         finally:
             time.sleep(5)
-
-def chunks(l, n):
-    return [list(array) for array in np.array_split(l, n)]
 
 def orchestrate_download():
     if not os.path.exists('ignored_data/downloads'):

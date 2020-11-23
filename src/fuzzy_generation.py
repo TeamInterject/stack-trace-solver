@@ -101,7 +101,7 @@ def load_to_knowladge_base(filename):
     for template in templates:
         base.insert_exception_template(template)
 
-generate_with_debug("cas.txt")
+#generate_with_debug("cas.txt")
 #generate_to_knowladge_base("cas.txt")
 #generate_to_knowladge_base("exceptions.txt")
 #load_to_knowladge_base("sorted_finished_exceptions.txt")

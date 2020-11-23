@@ -44,13 +44,13 @@ def orchestrate_extraction(threads=8):
                 lines = "\n".join(file.readlines())
                 output.write(lines)
 
-def load_exceptions(fileName="exceptions.txt"):
-    with open(f"ignored_data/{fileName}", "r+", encoding="utf-8", errors='ignore') as file:
+def load_exceptions(filename):
+    with open(f"ignored_data/{filename}", "r+", encoding="utf-8", errors='ignore') as file:
         lines = "\n".join(file.readlines())
         return retrieve_exceptions(lines)
 
-def retrieve_exception_dictionary(fileName="exceptions.txt"):
-    exceptions = load_exceptions(fileName)
+def retrieve_exception_dictionary(filename):
+    exceptions = load_exceptions(filename)
     ex_dict = {}
     for exception in exceptions:
         if exception.exception not in ex_dict:
@@ -60,8 +60,8 @@ def retrieve_exception_dictionary(fileName="exceptions.txt"):
 
     return ex_dict
 
-def debug_print():
-    ex_dict = retrieve_exception_dictionary()
+def debug_print(filename):
+    ex_dict = retrieve_exception_dictionary(filename)
     ex_dict_keys = list(ex_dict.keys())
     ex_dict_keys.sort()
     for key in ex_dict_keys:
@@ -72,3 +72,5 @@ def debug_print():
         print(key)
         for value in values:
             print(f"\t{value}")
+
+# debug_print("exceptions_minimized.txt")
