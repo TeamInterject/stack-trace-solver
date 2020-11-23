@@ -14,18 +14,26 @@ def get_links(input_stack_trace):
         exit()
 
     cause_exception = exceptions[-1]
-    [exception_query, generic_query] = format_stackoverflow_query_string(cause_exception.exception, cause_exception.message)
+    queries = format_stackoverflow_query_string(cause_exception.exception, cause_exception.message)
 
-    result = get_stackoverflow_links(exception_query, ["java"])
+    result = []
+    for query in queries:
+        if len(result) >= 5:
+            break
 
-    if len(result['items']) < 5:
-        non_tagged_results = get_stackoverflow_links(generic_query)
-        result['items'].extend(non_tagged_results['items'])
-        result['items'] = result['items'][0:5]
+        result.extend(get_stackoverflow_links(query, ["java"])["items"])
+        result = result[0:5]
+
+    for query in queries:
+        if len(result) >= 5:
+            break
+
+        result.extend(get_stackoverflow_links(query)["items"])
+        result = result[0:5]
 
     top_results = []
     dump = {"results": top_results}
-    for i in result['items']:
+    for i in result:
         top_results.append({
             "Link": i["link"],
             "Title": i['title'],

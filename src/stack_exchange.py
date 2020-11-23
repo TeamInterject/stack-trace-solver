@@ -31,14 +31,20 @@ def get_stackoverflow_links(keyword, tags = []):
 knowladge_base = KnowladgeBase().get_knowladge_dict()
 
 def format_stackoverflow_query_string(exception, message):
+    if message is None or str.isspace(message):
+        return [exception]
+
     if exception not in knowladge_base:
         # TODO: Do more processing. Tokenize, try to get rid of irregular words, etc.
-        return message
+        return [f"{exception}: {message}", message]
 
     for fact in knowladge_base[exception]:
         found = re.search(fact, message)
         if bool(found):
             msg = "".join(found.groups())
+            if str.isspace(msg):
+                return  [f"{exception}: {msg}"]
+
             return [f"{exception}: {msg}", msg]
     
-    return message
+    return [f"{exception}: {message}", message]
