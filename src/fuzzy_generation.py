@@ -79,6 +79,9 @@ def generate_templates(filename):
 def generate_with_debug(filename):
     templates = generate_templates(filename)
     for template in templates:
+        if not template.generated:
+            continue
+        
         print(template)
         for message in template.messages:
             print(f"\t{message}")

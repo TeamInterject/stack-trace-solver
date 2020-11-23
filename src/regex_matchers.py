@@ -3,7 +3,6 @@ import re
 def check_for_java(text):
     return bool(re.search(r"((.|\n)*)[(].*\.java.*[)]((.|\n)*)", text))
 
-
 class ExceptionMatch(object):
     def __init__(self, exception, msg=""):
         self.exception = exception.strip()
@@ -17,7 +16,6 @@ class ExceptionMatch(object):
 
     def __repr__(self):
         return self.__str__()
-
 
 def retrieve_exceptions(text):
     searches = re.findall(

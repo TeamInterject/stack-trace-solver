@@ -31,7 +31,7 @@ def get_stackoverflow_links(keyword, tags = []):
 knowladge_base = KnowladgeBase().get_knowladge_dict()
 
 def format_stackoverflow_query_string(exception, message):
-    if message is None or str.isspace(message):
+    if message is None or str.isspace(message) or len(message) == 0:
         return [exception]
 
     if exception not in knowladge_base:
