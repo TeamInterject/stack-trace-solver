@@ -1,0 +1,26 @@
+.loading-spinner-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #dff9fb;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  visibility: visible;
+  opacity: 0.9;
+  transition: visibility 0.5s;
+}
+
+.loading-spinner-container--disabled {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.loading-spinner-container__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

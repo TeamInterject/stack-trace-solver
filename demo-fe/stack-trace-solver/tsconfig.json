@@ -3,8 +3,7 @@
     "target": "es2017",
     "lib": [
       "dom",
-      "dom.iterable",
-      "esnext"
+      "dom.iterable"
     ],
     "allowJs": true,
     "sourceMap": true,
@@ -18,8 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    "noFallthroughCasesInSwitch": true
+    "jsx": "react"
   },
   "include": [
     "src"
