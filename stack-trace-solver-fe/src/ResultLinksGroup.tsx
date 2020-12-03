@@ -13,7 +13,7 @@ const ResultLinksGroup: React.FC<IResultLinksGroupProps> = (props: IResultLinksG
     return props.links.map((link, index) => {
       return (
         <Col className="mt-3" sm={6}>
-          <ResultLinkCard title={`Result #${index}`} link={link} />
+          <ResultLinkCard title={`Result #${index + 1}`} link={link} />
         </Col>
       );
     });
