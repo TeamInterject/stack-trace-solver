@@ -18,7 +18,7 @@ function App() {
             ? 
             <ResultLinksGroup
               onBackButtonClick={() => toggleShowResultLinks(false)}
-              links={["www.google.com", "www.github.com"]}
+              links={["www.google.com", "www.github.com", "www.github.com", "www.github.com", "www.github.com"]}
             />
             :
             <StackTraceInput onSubmit={() => {toggleShowResultLinks(true)}} />
