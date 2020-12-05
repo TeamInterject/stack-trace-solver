@@ -2,6 +2,7 @@ from regex_matchers import retrieve_exceptions, check_for_java
 from stack_exchange import get_stackoverflow_links, format_stackoverflow_query_string
 import json
 from flask import Flask, Response, request
+from flask_cors import CORS
 
 def get_links(input_stack_trace):
     if not check_for_java(input_stack_trace):
@@ -43,6 +44,7 @@ def get_links(input_stack_trace):
     return dump
 
 api = Flask(__name__)
+CORS(api)
 
 @api.route('/', methods=['GET'])
 def get_example():

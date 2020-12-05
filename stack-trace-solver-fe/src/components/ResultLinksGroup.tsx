@@ -1,19 +1,20 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import ResultLinkCard from "./ResultLinkCard";
-import InfoIcon from "./info-icon.svg";
+import InfoIcon from "../assets/info-icon.svg";
+import Results from "../api/Results";
 
 export interface IResultLinksGroupProps {
-  links: string[];
+  results: Results;
   onBackButtonClick: () => void;
 }
 
 const ResultLinksGroup: React.FC<IResultLinksGroupProps> = (props: IResultLinksGroupProps) => {
   const renderResultLinkCards = (): JSX.Element[] => {
-    return props.links.map((link, index) => {
+    return props.results.Results.map((result) => {
       return (
         <Col className="mt-3" sm={6}>
-          <ResultLinkCard title={`Result #${index + 1}`} link={link} />
+          <ResultLinkCard result={result} />
         </Col>
       );
     });
@@ -34,7 +35,7 @@ const ResultLinksGroup: React.FC<IResultLinksGroupProps> = (props: IResultLinksG
     <Row className="h-100 d-flex align-items-center justify-content-center">
       <Col>
         <Row className="mt-2 d-flex justify-content-center">
-          {props.links.length === 0 ? renderNoResultsInfoMessage() : renderResultLinkCards()}
+          {props.results.Results.length === 0 ? renderNoResultsInfoMessage() : renderResultLinkCards()}
         </Row>
         <Row>
           <Col className="mt-4 d-flex justify-content-center">

@@ -8,7 +8,9 @@ export interface IStackTraceInputProps {
 const StackTraceInput: React.FC<IStackTraceInputProps> = (props: IStackTraceInputProps): JSX.Element => {
   const [stackTrace, setStackTrace] = useState(""); 
 
-  const handleSubmit = (): void => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.stopPropagation();
+    event.preventDefault();
     props.onSubmit(stackTrace);
   };
 

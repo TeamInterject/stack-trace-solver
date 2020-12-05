@@ -1,6 +1,6 @@
 import React from "react";
 import Loader from "react-loader-spinner";
-import "./loading-spinner.css";
+import "../loading-spinner.css";
 
 export interface ILoadingSpinnerProps {
   isLoading: boolean;
