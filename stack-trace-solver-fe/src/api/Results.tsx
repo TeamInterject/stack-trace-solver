@@ -1,5 +1,5 @@
 export default interface Results {
-  Results: Result[];
+  results: Result[];
 }
 
 export interface Result {

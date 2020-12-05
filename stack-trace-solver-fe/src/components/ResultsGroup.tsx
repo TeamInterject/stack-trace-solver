@@ -1,21 +1,23 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
-import ResultLinkCard from "./ResultLinkCard";
+import ResultCard from "./ResultCard";
 import InfoIcon from "../assets/info-icon.svg";
 import Results from "../api/Results";
 
-export interface IResultLinksGroupProps {
+export interface IResultsGroupProps {
   results: Results;
   onBackButtonClick: () => void;
 }
 
-const ResultLinksGroup: React.FC<IResultLinksGroupProps> = (props: IResultLinksGroupProps) => {
-  const renderResultLinkCards = (): JSX.Element[] => {
-    return props.results.Results.map((result) => {
+const ResultsGroup: React.FC<IResultsGroupProps> = (props: IResultsGroupProps) => {
+  const renderResultCards = (): JSX.Element[] => {
+    return props.results.results.map((result, index) => {
       return (
-        <Col className="mt-3" sm={6}>
-          <ResultLinkCard result={result} />
-        </Col>
+        <Row className="d-flex justify-content-center" key={index}>
+          <Col className="mt-3" sm={8}>
+            <ResultCard result={result} />
+          </Col>
+        </Row>
       );
     });
   };
@@ -32,10 +34,12 @@ const ResultLinksGroup: React.FC<IResultLinksGroupProps> = (props: IResultLinksG
   };
 
   return (
-    <Row className="h-100 d-flex align-items-center justify-content-center">
+    <Row className="mb-4 h-100 d-flex align-items-center justify-content-center">
       <Col>
-        <Row className="mt-2 d-flex justify-content-center">
-          {props.results.Results.length === 0 ? renderNoResultsInfoMessage() : renderResultLinkCards()}
+        <Row>
+          <Col>
+            {props.results.results.length === 0 ? renderNoResultsInfoMessage() : renderResultCards()}
+          </Col>
         </Row>
         <Row>
           <Col className="mt-4 d-flex justify-content-center">
@@ -47,4 +51,4 @@ const ResultLinksGroup: React.FC<IResultLinksGroupProps> = (props: IResultLinksG
   );
 };
 
-export default ResultLinksGroup;
+export default ResultsGroup;

@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import APIClient from './api/APIClient';
 import './App.css';
 import LoadingSpinner from './components/LoadingSpinner';
-import ResultLinksGroup from './components/ResultLinksGroup';
+import ResultsGroup from './components/ResultsGroup';
 import Results from './api/Results';
 import StackTraceInput from './components/StackTraceInput';
 
@@ -15,8 +15,8 @@ function App() {
 
   const getPostedLinks = (stackTrace: string): void => {
     toggleIsLoading(true);
-    client.getPostedLinks(stackTrace).then((results) => {
-      setResults(results);
+    client.getPostedLinks(stackTrace).then((resultsData) => {
+      setResults(resultsData);
       toggleShowResultLinks(true);
       toggleIsLoading(false);
     }).catch((reason) => {
@@ -30,9 +30,9 @@ function App() {
       <LoadingSpinner isLoading={isLoading} />
       <Row className="flex-fill">
         <Col>
-          {showResultLinks 
+          {showResultLinks
             ? 
-            <ResultLinksGroup
+            <ResultsGroup
               onBackButtonClick={() => toggleShowResultLinks(false)}
               results={results}
             />
