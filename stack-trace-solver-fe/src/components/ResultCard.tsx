@@ -13,7 +13,7 @@ const ResultCard: React.FC<IResultCardProps> = (props: IResultCardProps): JSX.El
         <Card className="shadow rounded">
           <Card.Header>
             <div style={{ fontWeight: "bold" }}>Score: {props.result.Score}</div>
-            <div>{props.result.Title.replace(/&quot;/g, "\"")}</div>
+            <div>{props.result.Title.replace(/&quot;/g, "\"").replace(/&#39;/g, "'")}</div>
           </Card.Header>
           <Card.Body>
             <Card.Link href={props.result.Link} target="_blank">{props.result.Link}</Card.Link>
