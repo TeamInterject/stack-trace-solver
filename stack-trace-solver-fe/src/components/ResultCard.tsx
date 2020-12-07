@@ -18,6 +18,11 @@ const ResultCard: React.FC<IResultCardProps> = (props: IResultCardProps): JSX.El
           <Card.Body>
             <Card.Link href={props.result.Link} target="_blank">{props.result.Link}</Card.Link>
           </Card.Body>
+          <Card.Footer>
+              <div style={{ paddingBottom: "10px" }}>Dectected Exception: {props.result.DetectedException}</div>
+              <div style={{ paddingBottom: "10px" }}>Generated from Template: {props.result.Template}</div>
+              <div style={{ paddingBottom: "10px" }}>Generated Query: {props.result.GeneratedQuery}</div>
+          </Card.Footer>
         </Card>
       </Col>
     </Row>

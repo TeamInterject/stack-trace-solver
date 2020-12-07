@@ -4,41 +4,49 @@ import json
 from flask import Flask, Response, request
 from flask_cors import CORS
 
-def get_links(input_stack_trace):
+def get_links(generated_queries, tags):
+    result = []
+    for generated_query in generated_queries:
+        if len(result) >= 5:
+            break
+
+        for query in generated_query.queries:
+            responses = get_stackoverflow_links(query, tags)["items"]
+            for response in responses:
+                result.append((generated_query.template, response, query))
+
+        result = result[0:5]
+    
+    return result
+
+def generate_results(input_stack_trace):
     if not check_for_java(input_stack_trace):
-        print("Not a java stack trace")
-        exit()
+        return { "results": [], "error": "Not a java stack trace" }
 
     exceptions = retrieve_exceptions(input_stack_trace)
     if len(exceptions) == 0:
-        print("No exceptions found")
-        exit()
+        return { "results": [], "error": "No exceptions found" }
 
     cause_exception = exceptions[-1]
-    queries = format_stackoverflow_query_string(cause_exception.exception, cause_exception.message)
+    generated_queries = format_stackoverflow_query_string(cause_exception.exception, cause_exception.message)
 
-    result = []
-    for query in queries:
-        if len(result) >= 5:
-            break
+    result = get_links(generated_queries, ["java"])
 
-        result.extend(get_stackoverflow_links(query, ["java"])["items"])
-        result = result[0:5]
-
-    for query in queries:
-        if len(result) >= 5:
-            break
-
-        result.extend(get_stackoverflow_links(query)["items"])
+    if (len(result) < 5):
+        result.extend(get_links(generated_queries, []))
         result = result[0:5]
 
     top_results = []
     dump = {"results": top_results}
     for i in result:
+        template, response, query = i
         top_results.append({
-            "Link": i["link"],
-            "Title": i['title'],
-            "Score": i['score']
+            "GeneratedQuery": query,
+            "DetectedException": cause_exception.__str__(),
+            "Template": template,
+            "Link": response["link"],
+            "Title": response['title'],
+            "Score": response['score']
         })
 
     return dump
@@ -56,13 +64,13 @@ def get_example():
             at NumberFormatExceptionTest.main(NumberFormatExceptionTest.java:3)
     '''
 
-    dump = get_links(example_request)
+    dump = generate_results(example_request)
     return Response(json.dumps(dump), mimetype='application/json')
 
 
 @api.route('/', methods=['POST'])
 def get_posted_links():
-    dump = get_links(request.get_json()["stack"])
+    dump = generate_results(request.get_json()["stack"])
     return Response(json.dumps(dump), mimetype='application/json')
 
 if __name__ == '__main__':

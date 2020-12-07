@@ -1,23 +1,6 @@
 import re
 import sqlite3
 from exception_template import ExceptionTemplate
-
-def generate_knowladge_base_entry(template):
-    parts = template.split("{*}")
-
-    processed_parts = []
-    for part in parts:
-        if (len(part) == 0):
-            processed_parts.append(part)
-            continue
-
-        part = re.escape(part)
-        part = f"({part})"
-
-        processed_parts.append(part)
-
-    return "(?:.+)".join(processed_parts)
-
 class KnowladgeBase():
     def __init__(self):
         self.conn = sqlite3.connect("ignored_data/knowladge_base.sqlite")
@@ -70,7 +53,7 @@ class KnowladgeBase():
             if template.type not in knowladge_base:
                 knowladge_base[template.type] = []
 
-            entry = generate_knowladge_base_entry(template.template)
+            entry = template.template
             knowladge_base[template.type].append(entry)
 
         return knowladge_base

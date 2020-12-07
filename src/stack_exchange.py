@@ -23,28 +23,50 @@ def get_stackoverflow_links(keyword, tags = []):
     return result
 
 
-# knowladge_base = {
-#     "java.lang.NumberFormatException": [r'(For input string)(?:.+)'],
-#     "java.sql.SQLException": [r'(Violation of unique constraint )(?:.+ )(duplicate value\(s\) for column\(s\) )(?:.+ )(in statement) (?:.+)'],
-# }
+def generate_knowladge_base_entry(template):
+    parts = template.split("{*}")
+
+    processed_parts = []
+    for part in parts:
+        if (len(part) == 0):
+            processed_parts.append(part)
+            continue
+
+        part = re.escape(part)
+        part = f"({part})"
+
+        processed_parts.append(part)
+
+    return "(?:.+)".join(processed_parts)
+
+class GeneratedQueries():
+    def __init__(self, template, queries):
+        self.template = template
+        self.queries = queries
 
 knowladge_base = KnowladgeBase().get_knowladge_dict()
 
 def format_stackoverflow_query_string(exception, message):
     if message is None or str.isspace(message) or len(message) == 0:
-        return [exception]
+        return [GeneratedQueries("", [exception])]
 
     if exception not in knowladge_base:
         # TODO: Do more processing. Tokenize, try to get rid of irregular words, etc.
-        return [f"{exception}: {message}", message]
+        return [GeneratedQueries("", [f"{exception}: {message}", message])]
 
+    knowladge_base[exception].sort(key=len, reverse=True)
+
+    results = []
     for fact in knowladge_base[exception]:
-        found = re.search(fact, message)
+        fact_regex = generate_knowladge_base_entry(fact)
+
+        found = re.search(fact_regex, message)
         if bool(found):
             msg = "".join(found.groups())
             if str.isspace(msg):
-                return  [f"{exception}: {msg}"]
+                results.append(GeneratedQueries(fact, [f"{exception}: {msg}"]))
 
-            return [f"{exception}: {msg}", msg]
+            results.append(GeneratedQueries(fact, [f"{exception}: {msg}", msg]))
     
-    return [f"{exception}: {message}", message]
+    results.append(GeneratedQueries("", [f"{exception}: {message}", message]))
+    return results
