@@ -3,6 +3,9 @@ export default interface Results {
 }
 
 export interface Result {
+  GeneratedQuery: string;
+  DetectedException: string;
+  Template: string;
   Link: string;
   Title: string;
   Score: number;
