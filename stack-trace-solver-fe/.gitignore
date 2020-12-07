@@ -1,6 +1,3 @@
-__pycache__/
-ignored_data/
-
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -27,4 +24,4 @@ yarn-error.log*
 
 #code cov
 .nyc_output/
-stack-trace-solver-fe/.eslintcache
+
