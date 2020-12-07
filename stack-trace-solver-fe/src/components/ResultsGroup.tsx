@@ -29,6 +29,9 @@ const ResultsGroup: React.FC<IResultsGroupProps> = (props: IResultsGroupProps) =
         <h3 className="text-center m-2">
           No links were generated :/
         </h3>
+        {props.results.error &&  
+          <h5 className="text-center m-2">Reason: {props.results.error}</h5>
+        }
       </div>
     );
   };

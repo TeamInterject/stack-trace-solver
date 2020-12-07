@@ -1,5 +1,6 @@
 export default interface Results {
   results: Result[];
+  error?: string;
 }
 
 export interface Result {
