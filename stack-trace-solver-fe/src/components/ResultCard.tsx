@@ -19,7 +19,7 @@ const ResultCard: React.FC<IResultCardProps> = (props: IResultCardProps): JSX.El
             <Card.Link href={props.result.Link} target="_blank">{props.result.Link}</Card.Link>
           </Card.Body>
           <Card.Footer>
-              <div style={{ paddingBottom: "10px" }}><span style={{ fontWeight: "bold" }}>Dectected Exception:</span>{props.result.DetectedException}</div>
+              <div style={{ paddingBottom: "10px" }}><span style={{ fontWeight: "bold" }}>Dectected Exception: </span>{props.result.DetectedException}</div>
               <div style={{ paddingBottom: "10px" }}><span style={{ fontWeight: "bold" }}>Generated from Template: </span>{props.result.Template}</div>
               <div style={{ paddingBottom: "10px" }}><span style={{ fontWeight: "bold" }}>Generated Query: </span>{props.result.GeneratedQuery}</div>
           </Card.Footer>
