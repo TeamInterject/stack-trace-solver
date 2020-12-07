@@ -57,6 +57,8 @@ def format_stackoverflow_query_string(exception, message):
     knowladge_base[exception].sort(key=len, reverse=True)
 
     results = []
+    results.append(GeneratedQueries("", [f"{exception}: {message}"]))
+
     for fact in knowladge_base[exception]:
         fact_regex = generate_knowladge_base_entry(fact)
 
@@ -64,9 +66,10 @@ def format_stackoverflow_query_string(exception, message):
         if bool(found):
             msg = "".join(found.groups())
             if str.isspace(msg):
-                results.append(GeneratedQueries(fact, [f"{exception}: {msg}"]))
+                pass
 
             results.append(GeneratedQueries(fact, [f"{exception}: {msg}", msg]))
+
+    results.append(GeneratedQueries("", [message]))
     
-    results.append(GeneratedQueries("", [f"{exception}: {message}", message]))
     return results
