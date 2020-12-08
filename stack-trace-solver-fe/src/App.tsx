@@ -26,9 +26,9 @@ function App() {
   };
 
   return (
-    <Container className="vh-100 mt-2 d-flex flex-column">
+    <Container className="vh-100 d-flex flex-column">
       <LoadingSpinner isLoading={isLoading} />
-      <Row className="flex-fill">
+      <Row className="mt-2 flex-fill">
         <Col>
           {showResultLinks
             ? 
