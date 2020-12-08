@@ -44,7 +44,13 @@ class GeneratedQueries():
         self.template = template
         self.queries = queries
 
-knowledge_base = KnowledgeBase("knowledge_base.sql").get_knowledge_dict()
+    def __repr__(self) -> str:
+        return f"{self.template}: {self.queries}"
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+knowledge_base = KnowledgeBase("knowledge_base.sqlite").get_knowledge_dict()
 
 def format_stackoverflow_query_string(exception, message):
     if message is None or str.isspace(message) or len(message) == 0:
