@@ -3,3 +3,4 @@ flask-cors==3.0.9
 fuzzywuzzy==0.18.0
 numpy==1.19.4
 tqdm==4.52.0
+requests==2.22.0

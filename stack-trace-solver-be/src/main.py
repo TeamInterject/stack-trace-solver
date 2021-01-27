@@ -2,7 +2,7 @@ from regex_matchers import retrieve_exceptions, check_for_java
 from stack_exchange import get_stackoverflow_links, format_stackoverflow_query_string
 import json
 from flask import Flask, Response, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 def get_links(generated_queries, tags):
     result = []
@@ -55,6 +55,7 @@ api = Flask(__name__)
 CORS(api)
 
 @api.route('/', methods=['GET'])
+@cross_origin()
 def get_example():
     example_request = '''
         Exception in thread "main" java.lang.NumberFormatException: For input string: "30k"
@@ -69,9 +70,10 @@ def get_example():
 
 
 @api.route('/', methods=['POST'])
+@cross_origin()
 def get_posted_links():
     dump = generate_results(request.get_json()["stack"])
     return Response(json.dumps(dump), mimetype='application/json')
 
 if __name__ == '__main__':
-    api.run()
+    api.run(host="0.0.0.0")
